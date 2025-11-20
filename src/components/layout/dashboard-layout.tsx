@@ -5,103 +5,93 @@ import { usePathname } from 'next/navigation';
 import { Rocket, PanelLeft, type LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
+interface NavLink {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+}
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  navLinks: {
-    href: string;
-    label: string;
-    icon: LucideIcon;
-  }[];
+  navLinks: NavLink[];
 }
 
 export function DashboardLayout({ children, navLinks }: DashboardLayoutProps) {
   const pathname = usePathname();
   
-  const NavContent = ({ mobile = false }: { mobile?: boolean }) => (
-    <>
+  const NavContent = ({ isMobile = false }: { isMobile?: boolean }) => (
+    <nav className={cn(
+      isMobile 
+        ? "grid gap-6 text-lg font-medium" 
+        : "flex flex-col items-start gap-2 px-2 text-sm font-medium lg:px-4"
+    )}>
+       <Link
+          href="/"
+          className={cn(
+            "group flex h-9 w-9 shrink-0 items-center justify-center gap-2 self-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base",
+            !isMobile && "mb-2"
+          )}
+        >
+          <Rocket className="h-4 w-4 transition-all group-hover:scale-110" />
+          <span className="sr-only">DroneTrack</span>
+        </Link>
       {navLinks.map((link) => 
-        mobile ? (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={cn(
-              "flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground",
-              pathname.startsWith(link.href) && (link.href !== '/admin' && link.href !== '/dashboard') && "text-foreground",
-              pathname === link.href && "text-foreground"
-            )}
-          >
-            <link.icon className="h-5 w-5" />
-            {link.label}
-          </Link>
-        ) : (
-          <Tooltip key={link.href}>
-            <TooltipTrigger asChild>
-              <Link
-                href={link.href}
-                className={cn(
-                  'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8',
-                  pathname.startsWith(link.href) && (link.href !== '/admin' && link.href !== '/dashboard') && 'bg-accent text-accent-foreground',
-                  pathname === link.href && 'bg-accent text-accent-foreground'
-                )}
-              >
-                <link.icon className="h-5 w-5" />
-                <span className="sr-only">{link.label}</span>
-              </Link>
-            </TooltipTrigger>
-            <TooltipContent side="right">{link.label}</TooltipContent>
-          </Tooltip>
-        )
+        <Link
+          key={link.href}
+          href={link.href}
+          className={cn(
+            "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary",
+            pathname.startsWith(link.href) && (link.href !== '/admin' && link.href !== '/dashboard') && "text-primary bg-muted",
+            pathname === link.href && "text-primary bg-muted",
+            isMobile && "gap-4 text-base"
+          )}
+        >
+          <link.icon className="h-4 w-4" />
+          <span className={cn(!isMobile && "lg:block hidden")}>{link.label}</span>
+          {isMobile && link.label}
+        </Link>
       )}
-    </>
+    </nav>
   );
 
   return (
-    <TooltipProvider>
-      <div className="flex min-h-screen w-full flex-col bg-muted/40">
-        <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
-          <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-            <Link
-              href="/"
-              className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
-            >
-              <Rocket className="h-4 w-4 transition-all group-hover:scale-110" />
-              <span className="sr-only">DroneTrack</span>
-            </Link>
-            <NavContent />
-          </nav>
-        </aside>
-        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-          <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+        <div className="hidden border-r bg-background md:block">
+            <div className="flex h-full max-h-screen flex-col gap-2">
+                <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+                    <Link href="/" className="flex items-center gap-2 font-semibold">
+                        <Rocket className="h-6 w-6 text-primary" />
+                        <span className="">DroneTrack</span>
+                    </Link>
+                </div>
+                <div className="flex-1">
+                  <NavContent />
+                </div>
+            </div>
+        </div>
+        <div className="flex flex-col">
+          <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
             <Sheet>
               <SheetTrigger asChild>
-                <Button size="icon" variant="outline" className="sm:hidden">
+                <Button size="icon" variant="outline" className="md:hidden">
                   <PanelLeft className="h-5 w-5" />
                   <span className="sr-only">Toggle Menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="sm:max-w-xs">
-                <nav className="grid gap-6 text-lg font-medium">
-                  <Link
-                    href="/"
-                    className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-                  >
-                    <Rocket className="h-5 w-5 transition-all group-hover:scale-110" />
-                    <span className="sr-only">DroneTrack</span>
-                  </Link>
-                  <NavContent mobile />
-                </nav>
+              <SheetContent side="left" className="flex flex-col">
+                <NavContent isMobile />
               </SheetContent>
             </Sheet>
+             <div className="w-full flex-1" />
+             {/* Future Header Content Here */}
           </header>
-          <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
             {children}
           </main>
         </div>
       </div>
-    </TooltipProvider>
   );
 }
