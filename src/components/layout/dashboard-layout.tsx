@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Drone, PanelLeft, type LucideIcon } from 'lucide-react';
+import { Rocket, PanelLeft, type LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -68,7 +68,7 @@ export function DashboardLayout({ children, navLinks }: DashboardLayoutProps) {
               href="/"
               className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
             >
-              <Drone className="h-4 w-4 transition-all group-hover:scale-110" />
+              <Rocket className="h-4 w-4 transition-all group-hover:scale-110" />
               <span className="sr-only">DroneTrack</span>
             </Link>
             <NavContent />
@@ -89,7 +89,7 @@ export function DashboardLayout({ children, navLinks }: DashboardLayoutProps) {
                     href="/"
                     className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
                   >
-                    <Drone className="h-5 w-5 transition-all group-hover:scale-110" />
+                    <Rocket className="h-5 w-5 transition-all group-hover:scale-110" />
                     <span className="sr-only">DroneTrack</span>
                   </Link>
                   <NavContent mobile />

@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { DashboardLayout } from '@/components/layout/dashboard-layout';
 import {
   LayoutDashboard,
-  Drone,
+  Rocket,
   Map,
   PlaneTakeoff,
   Users,
@@ -11,7 +11,7 @@ import {
 
 const adminLinks = [
   { href: '/admin', label: 'Overview', icon: LayoutDashboard },
-  { href: '/admin/drones', label: 'Drones', icon: Drone },
+  { href: '/admin/drones', label: 'Drones', icon: Rocket },
   { href: '/admin/missions', label: 'Missions', icon: Map },
   { href: '/admin/bookings', label: 'Bookings', icon: PlaneTakeoff },
   { href: '/admin/users', label: 'Users', icon: Users },

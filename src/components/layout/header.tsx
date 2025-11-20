@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Drone, Menu } from 'lucide-react';
+import { Rocket, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -28,7 +28,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <Drone className="h-6 w-6 text-primary" />
+          <Rocket className="h-6 w-6 text-primary" />
           <span className="font-bold sm:inline-block">DroneTrack</span>
         </Link>
         <nav className="hidden flex-1 gap-6 text-sm font-medium md:flex">
@@ -55,7 +55,7 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <Link href="/" className="mr-6 flex items-center space-x-2">
-                <Drone className="h-6 w-6 text-primary" />
+                <Rocket className="h-6 w-6 text-primary" />
                 <span className="font-bold">DroneTrack</span>
               </Link>
               <div className="mt-6 flex flex-col space-y-4">
