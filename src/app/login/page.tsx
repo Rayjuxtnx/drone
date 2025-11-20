@@ -45,7 +45,7 @@ export default function LoginPage() {
                 <CardHeader>
                 <CardTitle className="text-2xl">Login</CardTitle>
                 <CardDescription>
-                    Enter your email below to login to your account. For the demo, use 'alice.client@email.com'.
+                    Enter your email to log in. For demo purposes, you can use the pre-existing account: 'alice.client@email.com'.
                 </CardDescription>
                 </CardHeader>
                 <CardContent>
