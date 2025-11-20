@@ -1,3 +1,70 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "A drone flying over a modern city at sunset.",
+      "imageUrl": "https://images.unsplash.com/photo-1589700447627-c6ed51767fb5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZHJvbmUlMjBjaXR5fGVufDB8fHx8MTc2MzY2NDgzOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drone city"
+    },
+    {
+      "id": "service-photography",
+      "description": "High-angle shot of a dramatic coastline.",
+      "imageUrl": "https://images.unsplash.com/photo-1640958903837-ce7bc6060501?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhZXJpYWwlMjBjb2FzdGxpbmV8ZW58MHx8fHwxNzYzNjgwNTk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "aerial coastline"
+    },
+    {
+      "id": "service-delivery",
+      "description": "A small package being carried by a drone over a suburban neighborhood.",
+      "imageUrl": "https://images.unsplash.com/photo-1590606137159-64e7e13e7c44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkcm9uZSUyMHBhY2thZ2V8ZW58MHx8fHwxNzYzNjgwNTk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drone package"
+    },
+    {
+      "id": "service-security",
+      "description": "A drone with a spotlight flying over a commercial property at night.",
+      "imageUrl": "https://images.unsplash.com/photo-1567955735902-38c9b944eec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkcm9uZSUyMG5pZ2h0fGVufDB8fHx8MTc2MzY4MDU5N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drone night"
+    },
+    {
+      "id": "service-agriculture",
+      "description": "Drone flying over vast green farm fields.",
+      "imageUrl": "https://images.unsplash.com/photo-1499452565718-6a1fcb7d2001?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkcm9uZSUyMGZhcm18ZW58MHx8fHwxNzYzNjUxOTEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drone farm"
+    },
+    {
+      "id": "service-inspection",
+      "description": "A drone inspecting a large bridge.",
+      "imageUrl": "https://images.unsplash.com/photo-1667945725151-6fed7402bb5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxkcm9uZSUyMGJyaWRnZXxlbnwwfHx8fDE3NjM2ODA1OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "drone bridge"
+    },
+    {
+      "id": "how-it-works-1",
+      "description": "A person on a laptop requesting a drone mission.",
+      "imageUrl": "https://images.unsplash.com/photo-1546795729-f3a5d42087f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwZXJzb24lMjBsYXB0b3B8ZW58MHx8fHwxNzYzNTc3MzY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person laptop"
+    },
+    {
+      "id": "how-it-works-2",
+      "description": "A diagram showing a drone and operator being assigned to a mission.",
+      "imageUrl": "https://images.unsplash.com/photo-1597378994822-9f850841e676?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkaWFncmFtJTIwZHJvbmV8ZW58MHx8fHwxNzYzNjgwNTk3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "diagram drone"
+    },
+    {
+      "id": "how-it-works-3",
+      "description": "A smartphone showing a map with a drone's flight path.",
+      "imageUrl": "https://images.unsplash.com/photo-1610985725707-bb0766bf123b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwaG9uZSUyMG1hcHxlbnwwfHx8fDE3NjM2NjA1OTJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "phone map"
+    },
+    {
+      "id": "tracking-map",
+      "description": "A stylized map of a city with a flight path overlay.",
+      "imageUrl": "https://images.unsplash.com/photo-1619468129361-605ebea04b44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjaXR5JTIwbWFwfGVufDB8fHx8MTc2MzYyNDg2MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city map"
+    },
+    {
+      "id": "admin-map",
+      "description": "A world map with various points indicating drone locations.",
+      "imageUrl": "https://images.unsplash.com/photo-1723306744533-bed5a4f696dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d29ybGQlMjBtYXB8ZW58MHx8fHwxNzYzNjYyNTYwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "world map"
+    }
+  ]
 }
