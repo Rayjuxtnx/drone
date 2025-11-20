@@ -8,8 +8,9 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/use-auth';
+import { useToast } from '@/hooks/use-toast';
 
 const navLinks = [
   { href: '/#services', label: 'Services' },
@@ -20,10 +21,25 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { toast } = useToast();
   const { isAuthenticated, logout } = useAuth();
 
   if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard')) {
     return null;
+  }
+  
+  const handleAdminLogin = () => {
+    const passkey = prompt("Enter the admin passkey:");
+    if (passkey === '123456') {
+      router.push('/admin');
+    } else if (passkey !== null) { // Don't show error if user cancels
+        toast({
+            variant: "destructive",
+            title: "Access Denied",
+            description: "The passkey you entered is incorrect.",
+        });
+    }
   }
 
   return (
@@ -76,7 +92,7 @@ export function Header() {
                  ) : (
                     <Link href="/login" className="transition-colors hover:text-foreground/80">Login</Link>
                  )}
-                 <Link href="/admin" className="transition-colors hover:text-foreground/80">Admin</Link>
+                 <Button variant="ghost" onClick={handleAdminLogin}>Admin</Button>
               </div>
             </SheetContent>
           </Sheet>
@@ -93,8 +109,8 @@ export function Header() {
                   <Link href="/login">Customer Login</Link>
                 </Button>
              )}
-            <Button variant="outline" asChild>
-                <Link href="/admin">Admin / Operator</Link>
+            <Button variant="outline" onClick={handleAdminLogin}>
+                Admin / Operator
             </Button>
             <Button asChild>
                 <Link href="/booking">Book a Drone</Link>
