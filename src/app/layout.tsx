@@ -21,9 +21,17 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className={cn("min-h-screen bg-background font-body antialiased")} suppressHydrationWarning>
+      <body 
+        className={cn(
+          "min-h-screen font-body antialiased bg-drone-lights-animation"
+        )} 
+        style={{
+          backgroundImage: `linear-gradient(-45deg, hsl(var(--background)), hsl(220, 13%, 15%))`
+        }}
+        suppressHydrationWarning
+      >
         <AuthProvider>
-          <div className="relative flex min-h-dvh flex-col bg-background">
+          <div className="relative flex min-h-dvh flex-col bg-transparent">
             {children}
           </div>
           <Toaster />
