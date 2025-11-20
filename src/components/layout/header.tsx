@@ -92,7 +92,6 @@ export function Header() {
                  ) : (
                     <Link href="/login" className="transition-colors hover:text-foreground/80">Login</Link>
                  )}
-                 <Button variant="ghost" onClick={handleAdminLogin}>Admin</Button>
               </div>
             </SheetContent>
           </Sheet>
@@ -109,9 +108,6 @@ export function Header() {
                   <Link href="/login">Customer Login</Link>
                 </Button>
              )}
-            <Button variant="outline" onClick={handleAdminLogin}>
-                Admin / Operator
-            </Button>
             <Button asChild>
                 <Link href="/booking">Book a Drone</Link>
             </Button>
