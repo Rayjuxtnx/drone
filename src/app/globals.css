@@ -10,47 +10,47 @@
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 201 92% 47.8%; /* Sky Blue */
+    --primary: 217 91% 60%; /* Electric Blue */
     --primary-foreground: 210 20% 98%;
     --secondary: 210 20% 92.2%;
     --secondary-foreground: 224 71.4% 4.1%;
     --muted: 210 20% 92.2%;
     --muted-foreground: 220 8.9% 46.1%;
-    --accent: 182 100% 45%; /* Electric Blue */
+    --accent: 217 91% 70%; /* Lighter Electric Blue */
     --accent-foreground: 224 71.4% 4.1%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 201 92% 47.8%;
+    --ring: 217 91% 60%;
     --radius: 0.8rem;
-    --chart-1: 201 92% 47.8%;
+    --chart-1: 217 91% 60%;
     --chart-2: 182 100% 45%;
-    --chart-3: 210 92% 75.5%;
-    --chart-4: 220 92% 75.5%;
-    --chart-5: 230 92% 75.5%;
+    --chart-3: 0 84.2% 60.2%;
+    --chart-4: 210 92% 75.5%;
+    --chart-5: 220 92% 75.5%;
   }
 
   .dark {
-    --background: 220 18% 12%;
+    --background: 224 71% 10%; /* Very Dark Blue */
     --foreground: 210 20% 98%;
     --card: 220 18% 14%;
     --card-foreground: 210 20% 98%;
     --popover: 220 18% 12%;
     --popover-foreground: 210 20% 98%;
-    --primary: 201 92% 47.8%;
+    --primary: 217 91% 60%; /* Electric Blue */
     --primary-foreground: 210 20% 98%;
     --secondary: 220 13% 20%;
     --secondary-foreground: 210 20% 98%;
     --muted: 220 13% 20%;
     --muted-foreground: 210 20% 60%;
-    --accent: 182 100% 45%;
+    --accent: 217 91% 70%; /* Lighter Electric Blue */
     --accent-foreground: 224 71.4% 4.1%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 72% 51%; /* Brighter Red */
     --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 20%;
+    --border: 220 13% 25%;
     --input: 220 13% 20%;
-    --ring: 201 92% 47.8%;
+    --ring: 217 91% 70%;
   }
 }
 
@@ -60,5 +60,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .btn-gradient-animation {
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease infinite;
+  }
+
+  @keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
