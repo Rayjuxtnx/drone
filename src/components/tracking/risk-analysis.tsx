@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useState, useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { optimizeRoutesAndLandingSpots, OptimizeRoutesAndLandingSpotsOutput } from '@/ai/flows/optimize-routes-and-landing-spots';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -31,7 +31,7 @@ function SubmitButton() {
 export function RiskAnalysis({ mission }: RiskAnalysisProps) {
   const [weatherData, setWeatherData] = useState('Current conditions: 15 mph winds from SSW, light rain, visibility 3 miles.');
   
-  const [state, formAction] = useFormState(async (prevState: typeof initialState, formData: FormData) => {
+  const [state, formAction] = useActionState(async (prevState: typeof initialState, formData: FormData) => {
     try {
       const result = await optimizeRoutesAndLandingSpots({
         missionDetails: formData.get('missionDetails') as string,
