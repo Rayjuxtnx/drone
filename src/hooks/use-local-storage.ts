@@ -7,31 +7,20 @@ function isServer(): boolean {
 }
 
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
-  const [storedValue, setStoredValue] = useState<T>(() => {
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
+
+  useEffect(() => {
     if (isServer()) {
-      return initialValue;
+      return;
     }
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      setStoredValue(item ? JSON.parse(item) : initialValue);
     } catch (error) {
       console.error(`Error reading localStorage key “${key}”:`, error);
-      return initialValue;
+      setStoredValue(initialValue);
     }
-  });
-
-  useEffect(() => {
-    if (isServer()) return;
-
-    const item = window.localStorage.getItem(key);
-    if (item) {
-        try {
-            setStoredValue(JSON.parse(item));
-        } catch (error) {
-            console.error(`Error parsing localStorage key “${key}”:`, error);
-        }
-    }
-  }, [key]);
+  }, [key, initialValue]);
 
   const setValue = useCallback(
     (value: T | ((val: T) => T)) => {
