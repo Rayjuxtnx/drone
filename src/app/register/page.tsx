@@ -12,27 +12,28 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import Link from 'next/link';
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { register } = useAuth();
   const { toast } = useToast();
-  const [email, setEmail] = useState('alice.client@email.com');
-  const [password, setPassword] = useState('password123'); // Mock password
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    const success = login(email, password);
+    const success = register(name, email, password);
     if (success) {
       toast({
-        title: 'Login Successful',
-        description: 'Welcome back!',
+        title: 'Account Created',
+        description: "Welcome! We've logged you in.",
       });
       router.push('/dashboard');
     } else {
       toast({
         variant: 'destructive',
-        title: 'Login Failed',
-        description: 'Invalid email or password.',
+        title: 'Registration Failed',
+        description: 'An account with this email already exists.',
       });
     }
   };
@@ -43,13 +44,23 @@ export default function LoginPage() {
         <div className="container flex min-h-[80vh] items-center justify-center py-12">
             <Card className="mx-auto max-w-sm">
                 <CardHeader>
-                <CardTitle className="text-2xl">Login</CardTitle>
+                <CardTitle className="text-2xl">Create an account</CardTitle>
                 <CardDescription>
-                    Enter your email below to login to your account. For the demo, use 'alice.client@email.com'.
+                    Enter your information to create a new account.
                 </CardDescription>
                 </CardHeader>
                 <CardContent>
-                <form onSubmit={handleLogin} className="grid gap-4">
+                <form onSubmit={handleRegister} className="grid gap-4">
+                    <div className="grid gap-2">
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                            id="name"
+                            placeholder="Your Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
                     <div className="grid gap-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -74,14 +85,14 @@ export default function LoginPage() {
                     />
                     </div>
                     <Button type="submit" className="w-full">
-                    Login
+                    Create Account
                     </Button>
                 </form>
                 </CardContent>
                 <CardFooter className="text-center text-sm">
-                    Don&apos;t have an account?{' '}
-                    <Link href="/register" className="underline ml-1">
-                        Sign up
+                    Already have an account?{' '}
+                    <Link href="/login" className="underline ml-1">
+                        Login
                     </Link>
                 </CardFooter>
             </Card>
