@@ -1,7 +1,27 @@
+'use client';
 import Link from "next/link";
 import { Rocket } from "lucide-react";
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
 
 export function Footer() {
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleAdminLogin = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const passkey = prompt("Enter the admin passkey:");
+    if (passkey === '123456') {
+      router.push('/admin');
+    } else if (passkey !== null) { // Don't show error if user cancels
+        toast({
+            variant: "destructive",
+            title: "Access Denied",
+            description: "The passkey you entered is incorrect.",
+        });
+    }
+  }
+
   return (
     <footer className="border-t bg-card">
       <div className="container flex flex-col items-center justify-between gap-4 py-10 md:h-24 md:flex-row md:py-0">
@@ -18,6 +38,7 @@ export function Footer() {
             <Link href="/#services" className="hover:text-foreground">Services</Link>
             <Link href="/booking" className="hover:text-foreground">Booking</Link>
             <Link href="/track" className="hover:text-foreground">Tracking</Link>
+            <a href="/admin" onClick={handleAdminLogin} className="hover:text-foreground cursor-pointer">Admin</a>
         </div>
       </div>
     </footer>
