@@ -4,7 +4,7 @@ import { useLocalStorage } from '@/hooks/use-local-storage';
 import { INITIAL_USERS } from '@/lib/data';
 import { User } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Label } from '@/componentssem '@/components/ui/label';
+import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
