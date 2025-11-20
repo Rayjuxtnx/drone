@@ -26,12 +26,12 @@ export function DashboardLayout({ children, navLinks }: DashboardLayoutProps) {
     <nav className={cn(
       isMobile 
         ? "grid gap-6 text-lg font-medium" 
-        : "flex flex-col items-start gap-2 px-2 text-sm font-medium lg:px-4"
+        : "flex flex-col gap-2 px-2 text-sm font-medium lg:px-4"
     )}>
        <Link
           href="/"
           className={cn(
-            "group flex h-9 w-9 shrink-0 items-center justify-center gap-2 self-center rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base",
+            "group flex h-9 w-9 shrink-0 items-center justify-center gap-2 self-start rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base",
             !isMobile && "mb-2"
           )}
         >
@@ -50,15 +50,14 @@ export function DashboardLayout({ children, navLinks }: DashboardLayoutProps) {
           )}
         >
           <link.icon className="h-4 w-4" />
-          <span className={cn(!isMobile && "lg:block hidden")}>{link.label}</span>
-          {isMobile && link.label}
+          <span className={cn(isMobile ? "" : "hidden md:inline")}>{link.label}</span>
         </Link>
       )}
     </nav>
   );
 
   return (
-      <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+      <div className="grid min-h-screen w-full md:grid-cols-[auto_1fr]">
         <div className="hidden border-r bg-background md:block">
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -67,7 +66,7 @@ export function DashboardLayout({ children, navLinks }: DashboardLayoutProps) {
                         <span className="">DroneTrack</span>
                     </Link>
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 py-2">
                   <NavContent />
                 </div>
             </div>
