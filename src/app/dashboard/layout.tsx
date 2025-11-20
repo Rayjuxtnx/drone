@@ -7,6 +7,7 @@ import {
   Map,
   User,
 } from 'lucide-react';
+import { withAuth } from '@/components/auth/with-auth';
 
 const dashboardLinks = [
   { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
@@ -15,6 +16,8 @@ const dashboardLinks = [
   { href: '/dashboard/profile', label: 'Profile', icon: User },
 ];
 
-export default function CustomerDashboardLayout({ children }: { children: ReactNode }) {
+function CustomerDashboardLayout({ children }: { children: ReactNode }) {
   return <DashboardLayout navLinks={dashboardLinks}>{children}</DashboardLayout>;
 }
+
+export default withAuth(CustomerDashboardLayout);

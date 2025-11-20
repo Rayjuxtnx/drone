@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
+import { useAuth } from '@/hooks/use-auth';
 
 const navLinks = [
   { href: '/#services', label: 'Services' },
@@ -19,6 +20,7 @@ const navLinks = [
 
 export function Header() {
   const pathname = usePathname();
+  const { isAuthenticated, logout } = useAuth();
 
   if (pathname.startsWith('/admin') || pathname.startsWith('/dashboard')) {
     return null;
@@ -69,15 +71,28 @@ export function Header() {
                   </Link>
                 ))}
                  <hr className="my-2" />
-                 <Link href="/dashboard" className="transition-colors hover:text-foreground/80">Login</Link>
+                 {isAuthenticated ? (
+                    <Button variant="ghost" onClick={logout}>Logout</Button>
+                 ) : (
+                    <Link href="/login" className="transition-colors hover:text-foreground/80">Login</Link>
+                 )}
                  <Link href="/admin" className="transition-colors hover:text-foreground/80">Admin</Link>
               </div>
             </SheetContent>
           </Sheet>
           <div className="hidden items-center space-x-2 md:flex">
-             <Button variant="ghost" asChild>
-                <Link href="/dashboard">Customer Login</Link>
-            </Button>
+             {isAuthenticated ? (
+                <>
+                  <Button variant="ghost" asChild>
+                    <Link href="/dashboard">Go to Dashboard</Link>
+                  </Button>
+                  <Button variant="outline" onClick={logout}>Logout</Button>
+                </>
+             ) : (
+                <Button variant="ghost" asChild>
+                  <Link href="/login">Customer Login</Link>
+                </Button>
+             )}
             <Button variant="outline" asChild>
                 <Link href="/admin">Admin / Operator</Link>
             </Button>
