@@ -17,8 +17,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { INITIAL_MISSIONS } from "@/lib/data";
-import { Mission, serviceTypes } from "@/lib/types";
+import { INITIAL_MISSIONS, INITIAL_DRONES } from "@/lib/data";
+import { Mission, serviceTypes, Drone } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -38,6 +38,7 @@ export default function BookingPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [missions, setMissions] = useLocalStorage<Mission[]>('missions', INITIAL_MISSIONS);
+  const [drones, setDrones] = useLocalStorage<Drone[]>('drones', INITIAL_DRONES);
   const [isDetecting, setIsDetecting] = useState(false);
 
   const form = useForm<BookingFormValues>({
@@ -87,20 +88,48 @@ export default function BookingPage() {
 
 
   function onSubmit(data: BookingFormValues) {
+    const availableDrone = drones.find(d => d.status === 'Available');
+
+    if (!availableDrone) {
+      toast({
+        variant: "destructive",
+        title: "Booking Failed",
+        description: "No drones are available at the moment. Please try again later.",
+      });
+      return;
+    }
+
     const newMission: Mission = {
       id: `mission-${Math.random().toString(36).substr(2, 9)}`,
-      status: 'Pending',
+      status: 'In Progress',
       customerId: 'customer-1', // Mock customer
       estimatedPrice: Math.floor(Math.random() * 400) + 50, // Mock price
       ...data,
       dateTime: data.dateTime.toISOString(),
+      droneId: availableDrone.id,
+      operatorId: 'operator-1', // Mock operator
+      telemetry: {
+        speed: 45,
+        altitude: 200,
+        battery: availableDrone.battery,
+        location: {
+            lat: availableDrone.location.lat,
+            lng: availableDrone.location.lng,
+        }
+      },
+      eta: '25 minutes',
     };
+    
+    // Update drone status
+    setDrones(prevDrones => 
+        prevDrones.map(d => d.id === availableDrone.id ? {...d, status: 'In Mission'} : d)
+    );
 
     setMissions([...missions, newMission]);
 
     toast({
-      title: "Booking Submitted!",
-      description: `Your mission request #${newMission.id} has been received.`,
+      title: "Mission In Progress!",
+      description: `Your mission #${newMission.id} is now active and can be tracked.`,
     });
 
     router.push(`/track?missionId=${newMission.id}`);
