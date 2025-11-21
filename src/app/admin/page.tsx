@@ -3,12 +3,10 @@ import { DronesList } from '@/components/admin/drones-list';
 import { RecentActivity } from '@/components/admin/recent-activity';
 import { StatsCards } from '@/components/admin/stats-cards';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Map } from 'lucide-react';
-import Image from 'next/image';
+import { NavigationalMap } from '@/components/common/navigational-map';
 
 export default function AdminDashboardPage() {
-  const adminMapImage = PlaceHolderImages.find(img => img.id === 'navigational-map');
   
   return (
     <div className="space-y-8">
@@ -27,17 +25,9 @@ export default function AdminDashboardPage() {
             <CardDescription>A global view of drone locations and mission hotspots.</CardDescription>
         </CardHeader>
         <CardContent>
-            {adminMapImage && (
-                <div className="aspect-video relative rounded-lg overflow-hidden border">
-                    <Image
-                        src={adminMapImage.imageUrl}
-                        alt={adminMapImage.description}
-                        fill
-                        className="object-cover"
-                        data-ai-hint={adminMapImage.imageHint}
-                    />
-                </div>
-            )}
+            <div className="aspect-video relative rounded-lg overflow-hidden border">
+              <NavigationalMap />
+            </div>
         </CardContent>
        </Card>
     </div>

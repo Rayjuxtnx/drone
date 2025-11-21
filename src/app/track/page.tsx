@@ -8,8 +8,7 @@ import { Mission, MissionStatus } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, BatteryFull, Gauge, MapPinned, Clock, Rocket } from 'lucide-react';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { NavigationalMap } from '@/components/common/navigational-map';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { RiskAnalysis } from '@/components/tracking/risk-analysis';
@@ -29,7 +28,6 @@ function TrackingPageContent() {
   const searchParams = useSearchParams();
   const missionId = searchParams.get('missionId');
   const [missions, setMissions] = useLocalStorage<Mission[]>('missions', INITIAL_MISSIONS);
-  const trackingMapImage = PlaceHolderImages.find(img => img.id === 'navigational-map');
 
   const initialMission = missions.find(m => m.id === missionId);
   const [mission, setMission] = useState(initialMission);
@@ -126,32 +124,24 @@ function TrackingPageContent() {
             </div>
           )}
 
-          {trackingMapImage && (
-            <div className="aspect-video relative rounded-lg overflow-hidden border bg-black">
-              <Image
-                src={trackingMapImage.imageUrl}
-                alt={trackingMapImage.description}
-                fill
-                className="object-cover opacity-50"
-                data-ai-hint={trackingMapImage.imageHint}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                    <Rocket className="h-8 w-8 text-blue-400 animate-pulse" style={{ transform: 'rotate(-45deg)' }}/>
-                    <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-blue-400 animate-ping" />
-                </div>
-              </div>
-               <div className="absolute bottom-4 left-4 bg-background/80 backdrop-blur-sm p-3 rounded-lg text-xs">
-                <h4 className="font-bold mb-1">Live Telemetry</h4>
-                {mission.telemetry ? (
-                    <>
-                        <p>Lat: {mission.telemetry.location.lat.toFixed(6)}</p>
-                        <p>Lng: {mission.telemetry.location.lng.toFixed(6)}</p>
-                    </>
-                ) : <p>No telemetry data.</p>}
+          <div className="aspect-video relative rounded-lg overflow-hidden border bg-black">
+            <NavigationalMap />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative">
+                  <Rocket className="h-8 w-8 text-blue-400 animate-pulse" style={{ transform: 'rotate(-45deg)' }}/>
+                  <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-blue-400 animate-ping" />
               </div>
             </div>
-          )}
+             <div className="absolute bottom-4 left-4 bg-background/80 backdrop-blur-sm p-3 rounded-lg text-xs">
+              <h4 className="font-bold mb-1">Live Telemetry</h4>
+              {mission.telemetry ? (
+                  <>
+                      <p>Lat: {mission.telemetry.location.lat.toFixed(6)}</p>
+                      <p>Lng: {mission.telemetry.location.lng.toFixed(6)}</p>
+                  </>
+              ) : <p>No telemetry data.</p>}
+            </div>
+          </div>
         </CardContent>
       </Card>
 

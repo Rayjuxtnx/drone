@@ -8,10 +8,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, CheckCircle, Clock, Hourglass, Activity, Map as MapIcon } from "lucide-react";
+import { ArrowRight, CheckCircle, Hourglass, Activity, Map as MapIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { NavigationalMap } from "@/components/common/navigational-map";
 
 const statusColors: { [key in MissionStatus]: string } = {
   Pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -24,7 +23,6 @@ const statusColors: { [key in MissionStatus]: string } = {
 
 export default function CustomerDashboardPage() {
   const [missions] = useLocalStorage<Mission[]>('missions', INITIAL_MISSIONS);
-  const adminMapImage = PlaceHolderImages.find(img => img.id === 'navigational-map');
   // MVP: assuming a single customer
   const customerMissions = missions.filter(m => m.customerId === 'customer-1');
 
@@ -117,17 +115,9 @@ export default function CustomerDashboardPage() {
                 <CardDescription>A view of your mission regions.</CardDescription>
             </CardHeader>
             <CardContent>
-                {adminMapImage && (
-                    <div className="aspect-video relative rounded-lg overflow-hidden border">
-                        <Image
-                            src={adminMapImage.imageUrl}
-                            alt={adminMapImage.description}
-                            fill
-                            className="object-cover"
-                            data-ai-hint={adminMapImage.imageHint}
-                        />
-                    </div>
-                )}
+                <div className="aspect-video relative rounded-lg overflow-hidden border">
+                  <NavigationalMap />
+                </div>
             </CardContent>
         </Card>
       </div>
