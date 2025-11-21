@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { CalendarIcon, MapPin, DollarSign, Book } from "lucide-react";
+import { CalendarIcon, MapPin, DollarSign, Book, LocateFixed, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,7 @@ import { Mission, serviceTypes } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { useState } from "react";
 
 const bookingFormSchema = z.object({
   serviceType: z.enum(serviceTypes, { required_error: "Please select a service type." }),
@@ -37,6 +38,7 @@ export default function BookingPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [missions, setMissions] = useLocalStorage<Mission[]>('missions', INITIAL_MISSIONS);
+  const [isDetecting, setIsDetecting] = useState(false);
 
   const form = useForm<BookingFormValues>({
     resolver: zodResolver(bookingFormSchema),
@@ -46,6 +48,43 @@ export default function BookingPage() {
       requirements: "",
     },
   });
+
+  const handleDetectLocation = () => {
+    setIsDetecting(true);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          // For simplicity, we'll just use the coordinates as the location string.
+          // A real app would use a reverse geocoding service to get an address.
+          const locationString = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+          form.setValue("pickupLocation", locationString);
+          setIsDetecting(false);
+          toast({
+            title: "Location Detected!",
+            description: "Pickup location has been set to your current position.",
+          });
+        },
+        (error) => {
+          console.error("Geolocation error:", error);
+          setIsDetecting(false);
+          toast({
+            variant: "destructive",
+            title: "Location Error",
+            description: "Could not detect your location. Please enter it manually.",
+          });
+        }
+      );
+    } else {
+      setIsDetecting(false);
+      toast({
+        variant: "destructive",
+        title: "Unsupported",
+        description: "Geolocation is not supported by your browser.",
+      });
+    }
+  };
+
 
   function onSubmit(data: BookingFormValues) {
     const newMission: Mission = {
@@ -108,7 +147,13 @@ export default function BookingPage() {
                     name="pickupLocation"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="flex items-center gap-2"><MapPin className="h-4 w-4"/> Pickup Location</FormLabel>
+                        <FormLabel className="flex items-center justify-between gap-2">
+                            <span className="flex items-center gap-2"><MapPin className="h-4 w-4"/> Pickup Location</span>
+                             <Button type="button" variant="link" size="sm" className="p-0 h-auto" onClick={handleDetectLocation} disabled={isDetecting}>
+                                {isDetecting ? <Loader2 className="h-4 w-4 animate-spin"/> : <LocateFixed className="h-4 w-4"/>}
+                                <span className="ml-1">Detect</span>
+                             </Button>
+                        </FormLabel>
                         <FormControl>
                           <Input placeholder="e.g., 123 Main St, Anytown" {...field} />
                         </FormControl>

@@ -8,8 +8,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, CheckCircle, Clock, Hourglass, Activity } from "lucide-react";
+import { ArrowRight, CheckCircle, Clock, Hourglass, Activity, Map as MapIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 const statusColors: { [key in MissionStatus]: string } = {
   Pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -22,6 +24,7 @@ const statusColors: { [key in MissionStatus]: string } = {
 
 export default function CustomerDashboardPage() {
   const [missions] = useLocalStorage<Mission[]>('missions', INITIAL_MISSIONS);
+  const adminMapImage = PlaceHolderImages.find(img => img.id === 'admin-map');
   // MVP: assuming a single customer
   const customerMissions = missions.filter(m => m.customerId === 'customer-1');
 
@@ -66,47 +69,68 @@ export default function CustomerDashboardPage() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader className="flex flex-row items-center">
-          <div className="grid gap-2">
-            <CardTitle>Upcoming Missions</CardTitle>
-            <CardDescription>Here are your next scheduled flights.</CardDescription>
-          </div>
-          <Button asChild size="sm" className="ml-auto gap-1">
-            <Link href="/dashboard/bookings">View All <ArrowRight className="h-4 w-4" /></Link>
-          </Button>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Mission ID</TableHead>
-                <TableHead>Service</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {upcomingMissions.length > 0 ? upcomingMissions.map((mission) => (
-                <TableRow key={mission.id}>
-                  <TableCell className="font-medium">{mission.id}</TableCell>
-                  <TableCell>{mission.serviceType}</TableCell>
-                  <TableCell>{new Date(mission.dateTime).toLocaleDateString()}</TableCell>
-                  <TableCell>
-                    <Badge className={cn("capitalize", statusColors[mission.status])}>{mission.status}</Badge>
-                  </TableCell>
-                </TableRow>
-              )) : (
+      <div className="grid gap-8 md:grid-cols-2">
+        <Card>
+          <CardHeader className="flex flex-row items-center">
+            <div className="grid gap-2">
+              <CardTitle>Upcoming Missions</CardTitle>
+              <CardDescription>Here are your next scheduled flights.</CardDescription>
+            </div>
+            <Button asChild size="sm" className="ml-auto gap-1">
+              <Link href="/dashboard/bookings">View All <ArrowRight className="h-4 w-4" /></Link>
+            </Button>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={4} className="h-24 text-center">
-                    No upcoming missions. <Link href="/booking" className="text-primary underline">Book one now!</Link>
-                  </TableCell>
+                  <TableHead>Mission ID</TableHead>
+                  <TableHead>Service</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+              </TableHeader>
+              <TableBody>
+                {upcomingMissions.length > 0 ? upcomingMissions.map((mission) => (
+                  <TableRow key={mission.id}>
+                    <TableCell className="font-medium">{mission.id}</TableCell>
+                    <TableCell>{mission.serviceType}</TableCell>
+                    <TableCell>{new Date(mission.dateTime).toLocaleDateString()}</TableCell>
+                    <TableCell>
+                      <Badge className={cn("capitalize", statusColors[mission.status])}>{mission.status}</Badge>
+                    </TableCell>
+                  </TableRow>
+                )) : (
+                  <TableRow>
+                    <TableCell colSpan={4} className="h-24 text-center">
+                      No upcoming missions. <Link href="/booking" className="text-primary underline">Book one now!</Link>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2"><MapIcon /> World Map</CardTitle>
+                <CardDescription>A view of your mission regions.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                {adminMapImage && (
+                    <div className="aspect-video relative rounded-lg overflow-hidden border">
+                        <Image
+                            src={adminMapImage.imageUrl}
+                            alt={adminMapImage.description}
+                            fill
+                            className="object-cover"
+                            data-ai-hint={adminMapImage.imageHint}
+                        />
+                    </div>
+                )}
+            </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
