@@ -1,8 +1,8 @@
 'use client';
 
 import { useLocalStorage } from "@/hooks/use-local-storage";
-import { INITIAL_MISSIONS } from "@/lib/data";
-import { Mission, MissionStatus, missionStatuses } from "@/lib/types";
+import { INITIAL_MISSIONS, INITIAL_DRONES } from "@/lib/data";
+import { Mission, MissionStatus, missionStatuses, Drone } from "@/lib/types";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal, Truck, User, Bot, Check, X } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 const statusColors: { [key in MissionStatus]: string } = {
   Pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -23,12 +24,67 @@ const statusColors: { [key in MissionStatus]: string } = {
 
 export default function MissionManagementPage() {
   const [missions, setMissions] = useLocalStorage<Mission[]>('missions', INITIAL_MISSIONS);
+  const [drones, setDrones] = useLocalStorage<Drone[]>('drones', INITIAL_DRONES);
+  const { toast } = useToast();
 
   const handleStatusChange = (missionId: string, newStatus: MissionStatus) => {
     setMissions(prevMissions => 
       prevMissions.map(m => m.id === missionId ? { ...m, status: newStatus } : m)
     );
   };
+  
+  const handleApprove = (missionId: string) => {
+    const availableDrone = drones.find(d => d.status === 'Available');
+    if (!availableDrone) {
+      toast({
+        variant: 'destructive',
+        title: 'Approval Failed',
+        description: 'No drones are currently available to assign to this mission.',
+      });
+      return;
+    }
+
+    setMissions(prevMissions =>
+      prevMissions.map(m => {
+        if (m.id === missionId) {
+          toast({
+            title: 'Mission Approved!',
+            description: `${m.id} has been set to 'In Progress' and assigned to drone ${availableDrone.id}.`,
+          });
+          return { 
+            ...m, 
+            status: 'In Progress', 
+            droneId: availableDrone.id,
+            operatorId: 'operator-1', // Mock operator
+            eta: '25 minutes', // Mock ETA
+            telemetry: {
+              speed: 0,
+              altitude: 0,
+              battery: availableDrone.battery,
+              location: {
+                lat: availableDrone.location.lat,
+                lng: availableDrone.location.lng
+              }
+            }
+          };
+        }
+        return m;
+      })
+    );
+
+    setDrones(prevDrones =>
+      prevDrones.map(d => d.id === availableDrone.id ? { ...d, status: 'In Mission' } : d)
+    );
+  };
+
+  const handleReject = (missionId: string) => {
+     handleStatusChange(missionId, 'Rejected');
+     toast({
+        variant: 'destructive',
+        title: 'Mission Rejected',
+        description: `Mission ${missionId} has been rejected.`,
+      });
+  }
 
   return (
     <Card>
@@ -97,8 +153,20 @@ export default function MissionManagementPage() {
                         </DropdownMenuPortal>
                       </DropdownMenuSub>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-green-600 focus:bg-green-50 focus:text-green-700"><Check className="mr-2 h-4 w-4"/>Approve</DropdownMenuItem>
-                      <DropdownMenuItem className="text-red-600 focus:bg-red-50 focus:text-red-700"><X className="mr-2 h-4 w-4"/>Reject</DropdownMenuItem>
+                      <DropdownMenuItem 
+                        className="text-green-600 focus:bg-green-50 focus:text-green-700"
+                        onClick={() => handleApprove(mission.id)}
+                        disabled={mission.status !== 'Pending'}
+                      >
+                        <Check className="mr-2 h-4 w-4"/>Approve
+                      </DropdownMenuItem>
+                      <DropdownMenuItem 
+                        className="text-red-600 focus:bg-red-50 focus:text-red-700"
+                        onClick={() => handleReject(mission.id)}
+                        disabled={mission.status === 'Rejected' || mission.status === 'Completed'}
+                      >
+                        <X className="mr-2 h-4 w-4"/>Reject
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
