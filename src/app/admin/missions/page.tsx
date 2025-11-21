@@ -97,10 +97,10 @@ export default function MissionManagementPage() {
           <TableHeader>
             <TableRow>
               <TableHead>Mission ID</TableHead>
-              <TableHead>Customer</TableHead>
-              <TableHead>Service</TableHead>
+              <TableHead className="hidden sm:table-cell">Customer</TableHead>
+              <TableHead className="hidden md:table-cell">Service</TableHead>
               <TableHead>Drone</TableHead>
-              <TableHead>Price</TableHead>
+              <TableHead className="hidden lg:table-cell">Price</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
@@ -111,10 +111,10 @@ export default function MissionManagementPage() {
             {missions.map((mission) => (
               <TableRow key={mission.id}>
                 <TableCell className="font-medium">{mission.id}</TableCell>
-                <TableCell>{mission.customerId}</TableCell>
-                <TableCell>{mission.serviceType}</TableCell>
+                <TableCell className="hidden sm:table-cell">{mission.customerId}</TableCell>
+                <TableCell className="hidden md:table-cell">{mission.serviceType}</TableCell>
                 <TableCell>{mission.droneId || 'Unassigned'}</TableCell>
-                <TableCell>${mission.estimatedPrice.toFixed(2)}</TableCell>
+                <TableCell className="hidden lg:table-cell">${mission.estimatedPrice.toFixed(2)}</TableCell>
                 <TableCell>
                   <Badge className={cn("capitalize", statusColors[mission.status])}>
                     {mission.status}

@@ -33,10 +33,10 @@ export default function DroneManagementPage() {
           <TableHeader>
             <TableRow>
               <TableHead>Drone ID</TableHead>
-              <TableHead>Model</TableHead>
+              <TableHead className="hidden md:table-cell">Model</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Battery</TableHead>
-              <TableHead>Location</TableHead>
+              <TableHead className="hidden lg:table-cell">Location</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
               </TableHead>
@@ -46,7 +46,7 @@ export default function DroneManagementPage() {
             {drones.map((drone) => (
               <TableRow key={drone.id}>
                 <TableCell className="font-medium">{drone.id}</TableCell>
-                <TableCell>{drone.model}</TableCell>
+                <TableCell className="hidden md:table-cell">{drone.model}</TableCell>
                 <TableCell>
                   <Badge className={cn("capitalize", statusColors[drone.status])}>
                     {drone.status}
@@ -55,10 +55,10 @@ export default function DroneManagementPage() {
                 <TableCell>
                     <div className="flex items-center gap-2">
                         <span>{drone.battery}%</span>
-                        <Progress value={drone.battery} className="w-24 h-2" />
+                        <Progress value={drone.battery} className="w-24 h-2 hidden sm:block" />
                     </div>
                 </TableCell>
-                <TableCell>{`${drone.location.lat.toFixed(4)}, ${drone.location.lng.toFixed(4)}`}</TableCell>
+                <TableCell className="hidden lg:table-cell">{`${drone.location.lat.toFixed(4)}, ${drone.location.lng.toFixed(4)}`}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
