@@ -15,13 +15,20 @@ export default function RootLayout({
 }>) {
   const [loading, setLoading] = useState(true);
 
+  // This effect will run once on the client
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // We check session storage to see if we should show the preloader.
+    // This prevents it from showing on every page navigation.
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    if (hasVisited) {
       setLoading(false);
-    }, 2000); // Show pre-loader for 2 seconds
-
-    return () => clearTimeout(timer);
+    }
   }, []);
+  
+  const handlePreloaderComplete = () => {
+    sessionStorage.setItem('hasVisited', 'true');
+    setLoading(false);
+  }
 
   return (
     <html lang="en" suppressHydrationWarning className="dark">
@@ -41,10 +48,10 @@ export default function RootLayout({
         }}
         suppressHydrationWarning
       >
-        <PreLoader loading={loading} />
+        <PreLoader loading={loading} onComplete={handlePreloaderComplete} />
         <AuthProvider>
           <div className={cn(
-            "relative flex min-h-dvh flex-col bg-transparent transition-opacity duration-500",
+            "relative flex min-h-dvh flex-col bg-transparent transition-opacity duration-1000",
             loading ? 'opacity-0' : 'opacity-100'
             )}>
             {children}

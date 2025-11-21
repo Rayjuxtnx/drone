@@ -85,4 +85,55 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+
+  /* New Pre-loader styles */
+  .bg-preloader-gradient {
+    background-color: #0c1021;
+    background-image:
+      radial-gradient(at 20% 20%, hsl(217, 91%, 60%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 80% 20%, hsl(0, 72%, 51%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 20% 80%, hsl(217, 91%, 70%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, hsl(0, 72%, 51%, 0.15) 0px, transparent 50%);
+    animation: preloader-lights 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes preloader-lights {
+    from { background-color: hsl(224, 71%, 10%); }
+    to { background-color: #000; }
+  }
+
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(hsl(var(--primary) / 0.1) 1px, transparent 1px),
+      linear-gradient(to right, hsl(var(--primary) / 0.1) 1px, transparent 1px);
+    background-size: 3rem 3rem;
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 60%, transparent 100%);
+    animation: grid-pan 8s linear infinite;
+  }
+
+  @keyframes grid-pan {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 3rem 3rem; }
+  }
+  
+  .bg-spotlight-gradient {
+    background-image: radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%);
+  }
+
+  @keyframes fly-in {
+    0% { transform: translateY(100px) scale(0.5); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  .animate-fly-in {
+    animation: fly-in 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+  .animate-pulse-slow {
+    animation: pulse-slow 3s infinite;
+  }
 }
