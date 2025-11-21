@@ -1,3 +1,4 @@
+
 export type ServiceType =
   | 'Aerial Photography'
   | 'Delivery'
@@ -41,6 +42,7 @@ export interface Mission {
   estimatedPrice: number;
   status: MissionStatus;
   droneId?: string;
+  droneModel?: string;
   operatorId?: string;
   customerId: string;
   telemetry?: {
@@ -78,3 +80,5 @@ export interface User {
   email: string;
   role: UserRole;
 }
+
+    

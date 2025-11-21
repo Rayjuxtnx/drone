@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useLocalStorage } from "@/hooks/use-local-storage";
@@ -8,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Map } from "lucide-react";
+import { Map, Rocket } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const statusColors: { [key in MissionStatus]: string } = {
@@ -38,7 +39,8 @@ export default function MyBookingsPage() {
               <TableHead>Mission ID</TableHead>
               <TableHead className="hidden sm:table-cell">Service</TableHead>
               <TableHead className="hidden md:table-cell">Date</TableHead>
-              <TableHead className="hidden lg:table-cell">Price</TableHead>
+              <TableHead className="hidden md:table-cell">Drone Model</TableHead>
+              <TableHead className="hidden lg:table-cell">Price (Ksh)</TableHead>
               <TableHead>Status</TableHead>
               <TableHead><span className="sr-only">Actions</span></TableHead>
             </TableRow>
@@ -49,7 +51,8 @@ export default function MyBookingsPage() {
                 <TableCell className="font-medium">{mission.id}</TableCell>
                 <TableCell className="hidden sm:table-cell">{mission.serviceType}</TableCell>
                 <TableCell className="hidden md:table-cell">{new Date(mission.dateTime).toLocaleString()}</TableCell>
-                <TableCell className="hidden lg:table-cell">${mission.estimatedPrice.toFixed(2)}</TableCell>
+                <TableCell className="hidden md:table-cell">{mission.droneModel || 'Any'}</TableCell>
+                <TableCell className="hidden lg:table-cell">{mission.estimatedPrice.toFixed(2)}</TableCell>
                 <TableCell>
                   <Badge className={cn("capitalize", statusColors[mission.status])}>
                     {mission.status}
@@ -65,7 +68,7 @@ export default function MyBookingsPage() {
               </TableRow>
             )) : (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">
+                <TableCell colSpan={7} className="h-24 text-center">
                   You haven't booked any missions yet.
                 </TableCell>
               </TableRow>
@@ -76,3 +79,5 @@ export default function MyBookingsPage() {
     </Card>
   );
 }
+
+    

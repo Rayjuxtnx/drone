@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useLocalStorage } from "@/hooks/use-local-storage";
@@ -7,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Truck, User, Bot, Check, X } from "lucide-react";
+import { MoreHorizontal, Truck, User, Bot, Check, X, Rocket } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuPortal } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -99,8 +100,9 @@ export default function MissionManagementPage() {
               <TableHead>Mission ID</TableHead>
               <TableHead className="hidden sm:table-cell">Customer</TableHead>
               <TableHead className="hidden md:table-cell">Service</TableHead>
-              <TableHead>Drone</TableHead>
-              <TableHead className="hidden lg:table-cell">Price</TableHead>
+              <TableHead className="hidden lg:table-cell">Drone Model</TableHead>
+              <TableHead>Assigned Drone</TableHead>
+              <TableHead className="hidden lg:table-cell">Price (Ksh)</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>
                 <span className="sr-only">Actions</span>
@@ -113,8 +115,9 @@ export default function MissionManagementPage() {
                 <TableCell className="font-medium">{mission.id}</TableCell>
                 <TableCell className="hidden sm:table-cell">{mission.customerId}</TableCell>
                 <TableCell className="hidden md:table-cell">{mission.serviceType}</TableCell>
+                <TableCell className="hidden lg:table-cell">{mission.droneModel || 'Any'}</TableCell>
                 <TableCell>{mission.droneId || 'Unassigned'}</TableCell>
-                <TableCell className="hidden lg:table-cell">${mission.estimatedPrice.toFixed(2)}</TableCell>
+                <TableCell className="hidden lg:table-cell">{mission.estimatedPrice.toFixed(2)}</TableCell>
                 <TableCell>
                   <Badge className={cn("capitalize", statusColors[mission.status])}>
                     {mission.status}
@@ -178,3 +181,5 @@ export default function MissionManagementPage() {
     </Card>
   );
 }
+
+    
