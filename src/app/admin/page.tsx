@@ -8,7 +8,7 @@ import { Map } from 'lucide-react';
 import Image from 'next/image';
 
 export default function AdminDashboardPage() {
-  const adminMapImage = PlaceHolderImages.find(img => img.id === 'admin-map');
+  const adminMapImage = PlaceHolderImages.find(img => img.id === 'navigational-map');
   
   return (
     <div className="space-y-8">

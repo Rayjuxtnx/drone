@@ -65,6 +65,12 @@
       "description": "A world map with various points indicating drone locations.",
       "imageUrl": "https://images.unsplash.com/photo-1723306744533-bed5a4f696dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8d29ybGQlMjBtYXB8ZW58MHx8fHwxNzYzNjYyNTYwfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "world map"
+    },
+    {
+      "id": "navigational-map",
+      "description": "Satellite view of a city grid used for navigation.",
+      "imageUrl": "https://images.unsplash.com/photo-1550983794-c18c213a8a93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzEzOHwwfDF8c2VhcmNofDE0fHxzYXRlbGxpdGUlMjBtYXB8ZW58MHx8fHwxNzE5OTAwODU0fDA&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "satellite map"
     }
   ]
 }

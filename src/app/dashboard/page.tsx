@@ -24,7 +24,7 @@ const statusColors: { [key in MissionStatus]: string } = {
 
 export default function CustomerDashboardPage() {
   const [missions] = useLocalStorage<Mission[]>('missions', INITIAL_MISSIONS);
-  const adminMapImage = PlaceHolderImages.find(img => img.id === 'admin-map');
+  const adminMapImage = PlaceHolderImages.find(img => img.id === 'navigational-map');
   // MVP: assuming a single customer
   const customerMissions = missions.filter(m => m.customerId === 'customer-1');
 
